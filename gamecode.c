@@ -98,20 +98,33 @@ int main(void)
     //Inicializando janela
     InitWindow(Largura_Tela,Altura_Tela,"Starlight Drift");
     
+    float movbackground = 0.0f;
+    
+    Image background = LoadImage("C:/Users/Luiz Fernando/Pictures/space.png");
+    ImageResize(&background,720,876);
+    Texture2D fundo = LoadTextureFromImage(background);
+    UnloadImage(background);
+    
     SetTargetFPS(60);
     while(!WindowShouldClose())
     {
         //Começando a desenhar e chamando as funções
         BeginDrawing();
         Movimento();
-        Tiro(jogador,bala,&jogador.firerate);
+        
+        movbackground += 6.0; //velocidade do background
+        if(movbackground >= background.height) movbackground = 0; //looping do background
         ClearBackground(RAYWHITE);
         //Muito importante
+        DrawTextureEx(fundo,(Vector2){0,movbackground},0.0f,1.0f,WHITE);
+        DrawTextureEx(fundo,(Vector2){0,-background.height + movbackground},0.0f,1.0f,WHITE);
+        Tiro(jogador,bala,&jogador.firerate);
         DrawText("homem negro fodase",Largura_Tela/2,Altura_Tela/2,20,LIGHTGRAY);
         DrawCircle(jogador.nave.x,jogador.nave.y,8,jogador.cor_nave);
         
         EndDrawing();
     }
+    UnloadTexture(fundo);
     
     return 0;
 }
