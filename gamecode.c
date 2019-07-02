@@ -98,7 +98,63 @@ int main(void)
     //Inicializando janela
     InitWindow(Largura_Tela,Altura_Tela,"Starlight Drift");
     
+    //carregando imagens e criando texturas, favor copiar o caminho e copiar
+    Image imageyy = LoadImage("/Users/lucas/Pictures/FFXV TRAB/bckok.png");
+    ImageResize (&imageyy,720,876);
+    Texture2D bck = LoadTextureFromImage(imageyy);
+    UnloadImage(imageyy);
+    
     SetTargetFPS(60);
+    
+    
+    //funcao menu
+    while(1)
+        {
+        
+           int posicaodomousex=GetMouseX();
+           int posicaodomousey=GetMouseY(); 
+            BeginDrawing();
+        
+                    ClearBackground(RAYWHITE);
+                        
+                    //desenhando o fundo
+                    DrawTexture(bck,0,0,RAYWHITE);
+                    DrawText(TextFormat("%i %i",posicaodomousex ,posicaodomousey), 190, 200, 20, LIGHTGRAY); 
+                    
+                        if (((posicaodomousex>=415)&&(posicaodomousex<=550))&&(posicaodomousey>=550)&&(posicaodomousey<=565))
+                        {
+                            DrawText("Novo Jogo",400,540,40,LIGHTGRAY);
+                            if(IsMouseButtonDown(0))
+                                break;
+                        }
+                        else
+                        {
+                            DrawText("Novo Jogo",415,550,25,LIGHTGRAY);
+                        }
+                        if (((posicaodomousex>=415)&&(posicaodomousex<=500))&&(posicaodomousey>=600)&&(posicaodomousey<=620))
+                        {
+                            DrawText("Créditos",400,590,40,LIGHTGRAY);
+                        }
+                        else
+                        {
+                            DrawText("Créditos",415,600,25,LIGHTGRAY);
+                        }
+                        if (((posicaodomousex>=415)&&(posicaodomousex<=450))&&(posicaodomousey>=650)&&(posicaodomousey<=665))
+                        {
+                            DrawText("Sair",400,640,40,LIGHTGRAY);
+                            if(IsMouseButtonDown(0))
+                                CloseWindow();//
+                        }
+                        else
+                        {
+                            DrawText("Sair",415,650,25,LIGHTGRAY);
+                        }
+        
+                
+                    
+                EndDrawing();
+        }
+        
     while(!WindowShouldClose())
     {
         //Começando a desenhar e chamando as funções
@@ -112,6 +168,6 @@ int main(void)
         
         EndDrawing();
     }
-    
+    UnloadTexture(bck); 
     return 0;
 }
